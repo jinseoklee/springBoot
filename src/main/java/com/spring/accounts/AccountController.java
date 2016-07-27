@@ -40,7 +40,7 @@ public class AccountController {
         }
 
         Account newAccount = service.createAccout(create);
-
+//        System.out.println("commint test");
         return new ResponseEntity<>(modelMapper.map(newAccount, AccountDto.Response.class), HttpStatus.CREATED);
     }
 
