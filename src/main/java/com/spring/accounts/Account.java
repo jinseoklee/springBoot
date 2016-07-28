@@ -18,14 +18,22 @@ import java.util.Date;
 @Data
 public class Account {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
+
+    @Column(unique = true)
     private String username;
+
     private String password;
+
     private String email;
+
     private String fullName;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date joined;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date update;
 

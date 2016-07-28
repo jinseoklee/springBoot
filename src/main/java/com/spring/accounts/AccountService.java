@@ -28,6 +28,14 @@ public class AccountService {
 
         Account account = modelMapper.map(dto, Account.class);
 
+
+        // controller ExceptionsHandler 에서 처리
+        String username = dto.getUsername();
+
+        if ( repository.findByUsername(username) != null ){
+            throw new UserDuplicateException(username);
+        }
+
         Date now = new Date();
 
         account.setJoined(now);

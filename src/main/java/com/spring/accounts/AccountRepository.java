@@ -1,11 +1,13 @@
 package com.spring.accounts;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 /**
  * Created by David on 2016-07-26.
  */
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<Account, Long>  {
+    Account findByUsername(String username);
 }
