@@ -1,6 +1,7 @@
 package com.spring.accounts;
 
-import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Date;
  */
 @Service
 @Transactional
+@Slf4j
 public class AccountService {
 
     @Autowired
@@ -33,7 +35,8 @@ public class AccountService {
         String username = dto.getUsername();
 
         if ( repository.findByUsername(username) != null ){
-            throw new UserDuplicateException(username);
+            log.error("UserDuplicateException 에러");
+            throw new AccountDuplicateException(username);
         }
 
         Date now = new Date();
@@ -41,5 +44,23 @@ public class AccountService {
         account.setJoined(now);
         account.setUpdate(now);
         return repository.save(account);
+    }
+
+    public Account updateAccount(Account account, AccountDto.Update updateDto) {
+
+        account.setUsername(updateDto.getUsername());
+        account.setPassword(updateDto.getPassword());
+
+        return repository.save(account);
+    }
+
+    public Account getAccount(Long id) {
+
+        Account account = repository.findOne(id);
+        if(account == null){
+            throw new AccountNotFoundException(id);
+        }
+
+        return null;
     }
 }

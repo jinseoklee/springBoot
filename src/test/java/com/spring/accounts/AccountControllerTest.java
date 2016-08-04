@@ -24,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,13 +55,13 @@ public class AccountControllerTest {
     }
 
     @Test
-    @Commit//    @Rollback
+//    @Commit//    @Rollback
     public void createAccount() throws Exception {
 
         AccountDto.Create create = new AccountDto.Create();
 
-        create.setUsername("davidLEe332222");
-        create.setPassword("4860ss212312111");
+        create.setUsername("davidLEe332222111222333");
+        create.setPassword("4860ss212312111333222333");
 
         ResultActions result = mockMvc.perform(post("/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -70,15 +71,15 @@ public class AccountControllerTest {
         // {"id":1,"username":"davidLEe","email":null,"fullName":null,"joined":1469601403609,"update":1469601403609}
         result.andDo(print());
         result.andExpect(status().isCreated());
-        result.andExpect(jsonPath("$.username", is("davidLEe332222")));
+        result.andExpect(jsonPath("$.username", is("davidLEe332222111222333")));
 
-//        result = mockMvc.perform(post("/accounts")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(create))
-//        );
-//
-//        result.andDo(print());
-//        result.andExpect(status().isBadRequest());
+        result = mockMvc.perform(post("/accounts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(create))
+        );
+
+        result.andDo(print());
+        result.andExpect(status().isBadRequest());
     }
 
     @Test
@@ -96,6 +97,15 @@ public class AccountControllerTest {
         result.andDo(print());
         result.andExpect(status().isBadRequest());
 
+    }
+
+    @Test
+    public void getOneAccountTest() throws Exception{
+
+        ResultActions resultActions = mockMvc.perform(get("/accounts/{id}", 5));
+
+        resultActions.andDo(print());
+        resultActions.andExpect(status().isBadRequest());
     }
 
 

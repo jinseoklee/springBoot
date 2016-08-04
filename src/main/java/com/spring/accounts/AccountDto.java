@@ -1,5 +1,6 @@
 package com.spring.accounts;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -29,5 +30,12 @@ public class AccountDto {
         private String fullName;
         private Date joined;
         private Date update;
+    }
+
+    @AllArgsConstructor
+    @Data
+    public static class Update{
+        private String username;
+        private String password;
     }
 }
